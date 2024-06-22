@@ -6,7 +6,6 @@ on:
 
 env:
   CARGO_TERM_COLOR: always
-  AUTH_SERVER_IP: ${{ secrets.AUTH_SERVER_IP }}
 
 jobs:
   build-cross:
@@ -22,12 +21,13 @@ jobs:
           - arm-unknown-linux-musleabi
           - arm-unknown-linux-musleabihf
           - aarch64-unknown-linux-musl
+          - mipsel-unknown-linux-musl
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install dependences
-        run: sudo apt-get update -y && sudo apt-get install -y upx;
+      - name: Install dependencies
+        run: sudo apt-get update -y && sudo apt-get install -y upx
 
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@master
@@ -73,7 +73,6 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install gnu-tar
-          # echo "::add-path::/usr/local/opt/gnu-tar/libexec/gnubin"
           echo "/usr/local/opt/gnu-tar/libexec/gnubin" >> $GITHUB_PATH
 
       - name: Install Rust toolchain
